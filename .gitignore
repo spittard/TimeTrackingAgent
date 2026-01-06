@@ -1,0 +1,7 @@
+# Git ignore for TimeTrackingAgent
+data/
+*.log
+.vs/
+*.user
+*.suo
+trello_secrets.json
