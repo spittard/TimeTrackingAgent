@@ -1,4 +1,4 @@
-﻿$historyFile = Join-Path $PSScriptRoot "..\time_tracking\history.jsonl"
+$historyFile = Join-Path $PSScriptRoot "..\data\history.jsonl"
 if (-not (Test-Path $historyFile)) {
     Write-Host "No history found."
     exit

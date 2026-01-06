@@ -1,4 +1,4 @@
-﻿# Timesheet Command
+# Timesheet Command
 # Quick command to view time tracking reports
 # Usage: 
 #   timesheet           - Show summary report

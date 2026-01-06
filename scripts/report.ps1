@@ -1,4 +1,4 @@
-﻿# Time Report Command
+# Time Report Command
 # Quick alias to generate time tracking reports
 
 param(

@@ -1,13 +1,13 @@
-﻿param(
+param(
     [Parameter(Mandatory=$false)]
     [string]$TrelloId,
     [Parameter(Mandatory=$false)]
     [DateTime]$EndTimeOverride
 )
 
-$sessionFile = Join-Path $PSScriptRoot "..\time_tracking\active_session.json"
-$activityLog = Join-Path $PSScriptRoot "..\time_tracking\session_activity.log"
-$historyFile = Join-Path $PSScriptRoot "..\time_tracking\history.jsonl"
+$sessionFile = Join-Path $PSScriptRoot "..\data\active_session.json"
+$activityLog = Join-Path $PSScriptRoot "..\data\session_activity.log"
+$historyFile = Join-Path $PSScriptRoot "..\data\history.jsonl"
 $trelloApi = Join-Path $PSScriptRoot "trello-api.ps1"
 
 if (-not (Test-Path $sessionFile)) {

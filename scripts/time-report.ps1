@@ -1,4 +1,4 @@
-﻿# Time Tracking Report Script
+# Time Tracking Report Script
 # Generates a detailed breakdown of time tracking sessions with totals
 
 param(
@@ -6,8 +6,8 @@ param(
     [string]$TrelloId
 )
 
-$historyFile = Join-Path $PSScriptRoot "..\time_tracking\history.jsonl"
-$activeSessionFile = Join-Path $PSScriptRoot "..\time_tracking\active_session.json"
+$historyFile = Join-Path $PSScriptRoot "..\data\history.jsonl"
+$activeSessionFile = Join-Path $PSScriptRoot "..\data\active_session.json"
 
 # Check if history file exists
 if (-not (Test-Path $historyFile)) {
@@ -34,7 +34,7 @@ if ($TrelloId) {
 }
 
 # Display header
-Write-Host "`n═" -ForegroundColor Cyan
+Write-Host "`n-" -ForegroundColor Cyan
 Write-Host "           TIME TRACKING REPORT                             " -ForegroundColor Cyan
 Write-Host "`n" -ForegroundColor Cyan
 

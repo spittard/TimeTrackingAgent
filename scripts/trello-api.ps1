@@ -1,4 +1,4 @@
-﻿function Get-TrelloConfig {
+function Get-TrelloConfig {
     $configPath = Join-Path $PSScriptRoot "..\trello_secrets.json"
     if (Test-Path $configPath) {
         return Get-Content $configPath | ConvertFrom-Json

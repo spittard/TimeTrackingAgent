@@ -1,4 +1,4 @@
-﻿$sessionFile = Join-Path $PSScriptRoot "..\time_tracking\active_session.json"
+$sessionFile = Join-Path $PSScriptRoot "..\data\active_session.json"
 if (Test-Path $sessionFile) {
     try {
         $json = Get-Content $sessionFile -Raw | ConvertFrom-Json

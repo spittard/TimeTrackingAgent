@@ -1,11 +1,11 @@
-﻿param(
+param(
     [Parameter(Mandatory=$true)]
     [string]$TrelloId,
     [Parameter(Mandatory=$false)]
     [string]$Description = ""
 )
-$sessionFile = Join-Path $PSScriptRoot "..\time_tracking\active_session.json"
-$activityLog = Join-Path $PSScriptRoot "..\time_tracking\session_activity.log"
+$sessionFile = Join-Path $PSScriptRoot "..\data\active_session.json"
+$activityLog = Join-Path $PSScriptRoot "..\data\session_activity.log"
 $trelloApi = Join-Path $PSScriptRoot "trello-api.ps1"
 
 # Import Trello API if available
