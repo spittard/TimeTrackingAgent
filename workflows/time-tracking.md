@@ -4,44 +4,112 @@ description: How to use the local time-tracking system
 
 # Time Tracking Workflow
 
-This guide explains how to track your work time using the local PowerShell scripts.
+This guide explains how to track your work time using the TimeTrackingAgent system.
 
-## Steps
+## Quick Start
 
-### 1. Start Tracking
-When you begin a task (usually associated with a Trello ID), start the clock:
-// turbo
+### Initialize (First Time)
 ```powershell
-powershell -File .agent/scripts/start-clock.ps1 -TrelloId "YOUR_TRELLO_ID" -Description "Initial task description"
+# Source the init script
+. .\scripts\init.ps1
+
+# Migrate existing history (if upgrading from JSONL)
+.\scripts\migrate-history.ps1
 ```
 
-### 2. Log Activity
-As you work, log significant milestones or completed sub-tasks by appending to the activity log:
-// turbo
+## Basic Workflow
+
+### 1. Start Tracking
+When you begin a task, start the clock:
 ```powershell
-"Describe what you just finished" | Out-File -FilePath .agent/time_tracking/session_activity.log -Append -Encoding utf8
+.\scripts\start-clock.ps1 -TrelloId "T123" -Description "Working on feature X"
+# Or with alias: start-time T123 "Working on feature X"
+```
+
+### 2. Log Progress
+Record milestones as you work:
+```powershell
+.\scripts\add-progress.ps1 -Type milestone -Summary "Completed database schema"
+# Or with alias: progress -Type milestone -Summary "Completed database schema"
+```
+
+Add notes for important context:
+```powershell
+.\scripts\add-progress.ps1 -Type note -Summary "Found issue with legacy code"
 ```
 
 ### 3. Maintain Session (Heartbeat)
-The timer will auto-stop if no heartbeat is detected for 15 minutes. Run this periodically:
-// turbo
+The system auto-captures checkpoints every 30 minutes and detects git commits.
+Run the heartbeat periodically to prevent auto-stop:
 ```powershell
-powershell -File .agent/scripts/heartbeat.ps1
+.\scripts\auto-checkpoint.ps1
+# Or with alias: checkpoint
 ```
+
+Sessions auto-stop after 15 minutes of inactivity.
 
 ### 4. Stop Tracking
-When you finish or take a break, stop the clock:
-// turbo
+When you finish or take a break:
 ```powershell
-powershell -File .agent/scripts/stop-clock.ps1
+.\scripts\stop-clock.ps1
+# Or with alias: stop-time
 ```
 
-## Summary/Report
-To see your total time:
-// turbo
+## Reports
+
+### View Timesheet
 ```powershell
-powershell -File .agent/scripts/timesheet.ps1
+.\scripts\timesheet.ps1
+# Or: .\scripts\timesheet.ps1 -Detailed
+```
+
+### Generate Reports
+```powershell
+# Daily report
+.\scripts\generate-report.ps1 -Type daily
+
+# Weekly report
+.\scripts\generate-report.ps1 -Type weekly
+
+# Project report
+.\scripts\generate-report.ps1 -Type project -TrelloId "T123"
+```
+
+## AI Agent Features
+
+### Get Context for Resume
+```powershell
+.\scripts\get-context.ps1 -Type resume
+```
+
+### Get Current Session Context
+```powershell
+.\scripts\get-context.ps1 -Type current
+```
+
+### Handoff to Another Agent
+```powershell
+.\scripts\get-context.ps1 -Type handoff -AsJson
+```
+
+### Summarize Session
+```powershell
+.\scripts\summarize-session.ps1 -Active
+.\scripts\summarize-session.ps1 -ForTrello
+```
+
+## Database Management
+
+### Backup
+```powershell
+.\scripts\backup-db.ps1
+.\scripts\backup-db.ps1 -List
+```
+
+### Restore
+```powershell
+.\scripts\backup-db.ps1 -Restore
 ```
 
 ---
-*Note: For more details, see [.agent/time-tracking-docs.md](../time-tracking-docs.md)*
+*For complete documentation, see [time-tracking-docs.md](../time-tracking-docs.md)*
