@@ -549,14 +549,23 @@ WHERE session_id = @session_id AND git_commit_hash IS NOT NULL AND git_commit_ha
 ORDER BY timestamp DESC LIMIT 1;
 "@ -Parameters @{ session_id = $SessionId }
 
-    if ($result -and $result.Count -gt 0) {
-        return $result[0].git_commit_hash
+    if ($result) {
+        # Handle both single object and array results
+        if ($result -is [array]) {
+            return $result[0].git_commit_hash
+        } else {
+            return $result.git_commit_hash
+        }
     }
 
     # Fallback to session start commit
     $session = Get-Sessions -SessionId $SessionId
-    if ($session -and $session.Count -gt 0) {
-        return $session[0].start_commit
+    if ($session) {
+        if ($session -is [array]) {
+            return $session[0].start_commit
+        } else {
+            return $session.start_commit
+        }
     }
 
     return $null
@@ -571,8 +580,13 @@ WHERE session_id = @session_id AND point_type = 'checkpoint'
 ORDER BY timestamp DESC LIMIT 1;
 "@ -Parameters @{ session_id = $SessionId }
 
-    if ($result -and $result.Count -gt 0) {
-        return $result[0].timestamp
+    if ($result) {
+        # Handle both single object and array results
+        if ($result -is [array]) {
+            return $result[0].timestamp
+        } else {
+            return $result.timestamp
+        }
     }
 
     return $null
